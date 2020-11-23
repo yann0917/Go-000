@@ -56,11 +56,69 @@
 
 ### 服务发现
 
-服务发现-客户端发现
+* 客户端发现
+  1. 一个服务实例被启动时，它的网络地址会被写到注册表上；
+  2. 当服务实例终止时，再从注册表中删除；
+  3. 这个服务实例的注册表通过心跳机制动态刷新；
+  4. 客户端使用一个负载均衡算法，去选择一个可用的服务实例，来响应这个请求。
+  * 直连，比服务端发现少一次网络跳转，Consumer 需要内置特定的服务发现客户端和发现逻辑
+* 服务端发现
+  1. 客户端通过负载均衡器向一个服务发送请求
+  2. 这个负载均衡器会查询服务注册表，并将请求路由到可用的服务实例上。
+  3. 服务实例在服务注册表上被注册和注销(Consul Template+Nginx， kubernetes+etcd)。
+  * Consumer 无需关注服务发现的细节，只需知道服务的 DNS 域名即可，支持异构语言开发，需要基础设施支撑，多一次网络跳转，可能有性能损耗
 
-服务发现-服务端发现
+### Consul
 
-2个心跳周期内可以
+<details>
+<summary>Consul 架构</summary>
+
+![https://www.consul.io/img/consul-arch.png](./images/consul-arch.png)
+
+[Consul Architecture](https://www.consul.io/docs/architecture)
+</details>
+
+### Eureka
+
+<details>
+<summary>Eureka 架构</summary>
+
+![https://www.consul.io/img/consul-arch.png](./images/eureka-arch.png)
+
+Register: 服务注册。服务的提供者，将自身注册到注册中心，服务提供者也是一个 Eureka Client。当 Eureka Client 向 Eureka Server 注册时，它提供自身的元数据，比如 IP 地址、端口，运行状况指示符 URL，主页等。
+
+Renew: 服务续约。Eureka Client 会每隔 30 秒发送一次心跳来续约。
+
+Cancel: 服务下线。Eureka Client 在程序关闭时向 Eureka Server 发送取消请求。
+
+Remote Call: 远程调用。当 Eureka Client 从注册中心获取到服务提供者信息后，就可以通过 Http 请求调用对应的服务；服务提供者有多个时，Eureka Client 客户端会通过 Ribbon 自动进行负载均衡。
+
+Eviction： 服务剔除。当 Eureka Client 和 Eureka Server 不再有心跳时，Eureka Server 会将该服务实例从服务注册列表中删除，即服务剔除。
+
+Eureka Server 在运行期间会去统计心跳失败比例在 15 分钟之内是否低于 85%，如果低于 85%，Eureka Server 即会进入自我保护机制。
+
+工作原理
+
+1. Eureka Server 启动成功，等待服务端注册。在启动过程中如果配置了集群，集群之间定时通过 Replicate 同步注册表，每个 Eureka Server 都存在独立完整的服务注册表信息
+2. Eureka Client 启动时根据配置的 Eureka Server 地址去注册中心注册服务
+3. Eureka Client 会每 30s 向 Eureka Server 发送一次心跳请求，证明客户端服务正常
+4. 当 Eureka Server 90s 内没有收到 Eureka Client 的心跳，注册中心则认为该节点失效，会注销该实例
+5. 单位时间内 Eureka Server 统计到有大量的 Eureka Client 没有上送心跳，则认为可能为网络异常，进入自我保护机制，不再剔除没有上送心跳的客户端
+6. 当 Eureka Client 心跳请求恢复正常之后，Eureka Server 自动退出自我保护模式
+7. Eureka Client 定时全量或者增量从注册中心获取服务注册表，并且将获取到的信息缓存到本地
+8. 服务调用时，Eureka Client 会先从本地缓存找寻调取的服务。如果获取不到，先从注册中心刷新注册表，再同步到本地缓存
+9. Eureka Client 获取到目标服务器信息，发起服务调用
+10. Eureka Client 程序关闭时向 Eureka Server 发送取消请求，Eureka Server 将实例从注册表中删除
+
+</details>
+
+Documents
+
+* [Consul](https://www.consul.io/docs)
+* [Eureka](https://github.com/Netflix/eureka/wiki)
+* [Eureka 工作原理](https://blog.csdn.net/qwe86314/article/details/94552801)
+* [nacos](https://nacos.io/zh-cn/docs/what-is-nacos.html)
+* [bilibili/discovery](https://github.com/bilibili/discovery)
 
 Servic Mesh 会变得很复杂
 ## 多集群 & 多租户
@@ -93,6 +151,8 @@ N+2 的节点来冗余节点
 * [canal](https://github.com/alibaba/canal)
 * [canal_mysql_nosql_sync](https://github.com/liukelin/canal_mysql_nosql_sync)
 * [四层和七层负载均衡的区别](https://kb.cnblogs.com/page/188170/)
+* [macvlan](https://www.cnblogs.com/bakari/p/10893589.html)
+* [Gossip协议：流言蜚语，原来也可以实现一致性](https://time.geekbang.org/column/article/208182)
 
 ## References
 
