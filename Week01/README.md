@@ -41,9 +41,33 @@
 ## 微服务设计
 
 ### API-Gateway
+
+> 统一的协议出口，在服务内进行大量的 dataset join，按照业务场景来设计粗粒度的 API，给后续服务的演进带来的很多优势
+
+[BFF(Back-end For Front-end)服务于前端的后端](https://www.jianshu.com/p/9cca72f9e93c)
+
 ### 微服务划分
 
+在实际项目中通常会采用两种不同的方式划分服务边界：
+
+1. 通过业务职能(Business Capability)
+2. DDD 的限界上下文(Bounded Context)
+
+CQRS(Command Query Responsibility Segregation) 将应用程序分为两部分：命令端和查询端。命令端处理程序创建、更新和删除请求，并在数据更改时发出事件。查询端通过针对一个或多个物化视图执行查询来处理查询，这些物化视图通过订阅数据更改时发出的事件流而保持最新。
+
+* [订阅 binlog 的中间件 canal](https://github.com/alibaba/canal)
+* [canal_mysql_nosql_sync](https://github.com/liukelin/canal_mysql_nosql_sync)
+
 ### 微服务安全
+
+完整请求流程：
+API Gateway  --> BFF --> Service Biz Auth --> JWT --> Req args
+
+在服务内部，要区分身份认证和授权，一般有三种：
+
+* Full Trust
+* Half Trust
+* Zero Trust
 
 ## gRPC & 服务发现
 
@@ -83,7 +107,7 @@
 <details>
 <summary>Eureka 架构</summary>
 
-![https://www.consul.io/img/consul-arch.png](./images/eureka-arch.png)
+![https://img-blog.csdnimg.cn/20190703103823398.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3F3ZTg2MzE0,size_16,color_FFFFFF,t_70](./images/eureka-arch.png)
 
 Register: 服务注册。服务的提供者，将自身注册到注册中心，服务提供者也是一个 Eureka Client。当 Eureka Client 向 Eureka Server 注册时，它提供自身的元数据，比如 IP 地址、端口，运行状况指示符 URL，主页等。
 
@@ -97,7 +121,7 @@ Eviction： 服务剔除。当 Eureka Client 和 Eureka Server 不再有心跳�
 
 Eureka Server 在运行期间会去统计心跳失败比例在 15 分钟之内是否低于 85%，如果低于 85%，Eureka Server 即会进入自我保护机制。
 
-工作原理
+### 工作原理
 
 1. Eureka Server 启动成功，等待服务端注册。在启动过程中如果配置了集群，集群之间定时通过 Replicate 同步注册表，每个 Eureka Server 都存在独立完整的服务注册表信息
 2. Eureka Client 启动时根据配置的 Eureka Server 地址去注册中心注册服务
@@ -122,8 +146,20 @@ Documents
 
 Servic Mesh 会变得很复杂
 ## 多集群 & 多租户
+### 多集群
 
-N+2 的节点来冗余节点
+* 多集群的必要性
+  * 从单一集群考虑，多节点保证可用性，N+2 的节点来冗余节点
+  * 单一集群故障带来的影响考虑冗余多套集群
+  * 单机房内的机房故障导致的问题
+
+### 多租户
+
+> 在一个微服务架构中允许多系统共存是利用微服务稳定性以及模块化最有效的方式之一，这种方 式一般被称为多租户(multi-tenancy)。租户可以是测试，金丝雀发布，影子系统(shadow systems)，甚至服务层或者产品线，使用租户能 够保证代码的隔离性并且能够基于流量租户做路由决策。
+
+多租户架构本质上描述为：
+
+跨服务传递请求携带上下文(context)，数据隔离的流 量路由方案。
 
 ## Q&A
 
