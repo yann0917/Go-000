@@ -15,7 +15,7 @@
 * 组件服务化
   * kit:一个微服务基础库 kit
   * service: 业务逻辑+kit 依赖+第三方依赖组成的微服务
-  * rpc+mq: 微服务间轻量级通讯
+  * rpc+mq: 微服务间轻量级通讯([gRPC](https://github.com/grpc/grpc-go) + [kafka](https://github.com/apache/kafka))
 * 按业务组织服务『[康威定律](https://zh.wikipedia.org/wiki/%E5%BA%B7%E5%A8%81%E5%AE%9A%E5%BE%8B)』
   * 开发团队对软件在生产环境的运行负全部责任！
   * 开发团队对软件在生产环境的运行负全部责任！
@@ -136,6 +136,16 @@ Eureka Server 在运行期间会去统计心跳失败比例在 15 分钟之内�
 
 </details>
 
+### Nacos
+
+<details>
+<summary>Nacos 架构</summary>
+
+![https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561217892717-1418fb9b-7faa-4324-87b9-f1740329f564.jpeg](./images/nacos-archjpeg.jpeg)
+
+[Nacos Architecture](https://nacos.io/zh-cn/docs/architecture.html)
+</details>
+
 Documents
 
 * [Consul](https://www.consul.io/docs)
@@ -170,13 +180,14 @@ Servic Mesh 会变得很复杂
 
 * [SRE：Google运维解密](https://item.jd.com/11973579.html) ☆☆☆☆☆
 * [UNIX环境高级编程第3版](https://item.jd.com/12720738.html) ☆☆☆☆☆
-* [HTTP2]()
+* [HTTP2](https://http2-explained.haxx.se/zh)
 * [K8S中文社区](https://www.kubernetes.org.cn/)
 * [Kubernetes教程](https://www.kuboard.cn/learning/)
 * [Prometheus](https://github.com/prometheus/prometheus)
 * [grafana](https://github.com/grafana/grafana)
 * [gRPC 中文官方文档](http://doc.oschina.net/grpc)
 * [gRPC-go](https://github.com/grpc/grpc-go)
+* [kafka](https://github.com/apache/kafka)
 * [Golang gRPC实践 连载](https://segmentfault.com/a/1190000007880647)
 * [如何通过gRPC实现高效远程过程调用？](https://time.geekbang.org/column/article/247812)
 * [跟煎鱼学 Go](https://eddycjy.com/go-categories/)
