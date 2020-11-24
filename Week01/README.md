@@ -175,6 +175,28 @@ Servic Mesh 会变得很复杂
 
 1. [第一课问题收集](https://shimo.im/docs/x8dxHkQRcdCHX8j3/read)
 2. [第二课问题收集](https://shimo.im/docs/WxJp66WCtjVwKDK3)
+3. Github 图片无法显示问题， `/etc/hosts` 文件写入以下内容，刷新浏览器即可
+
+   ```bash
+   # GitHub Start
+    140.82.114.4 github.com
+    140.82.114.4 gist.github.com
+    185.199.108.153 assets-cdn.github.com
+    151.101.64.133 raw.githubusercontent.com
+    151.101.108.133 gist.githubusercontent.com
+    151.101.108.133 cloud.githubusercontent.com
+    151.101.108.133 camo.githubusercontent.com
+    151.101.108.133 avatars0.githubusercontent.com
+    151.101.108.133 avatars1.githubusercontent.com
+    151.101.108.133 avatars2.githubusercontent.com
+    151.101.108.133 avatars3.githubusercontent.com
+    151.101.108.133 avatars4.githubusercontent.com
+    151.101.108.133 avatars5.githubusercontent.com
+    151.101.108.133 avatars6.githubusercontent.com
+    151.101.108.133 avatars7.githubusercontent.com
+    151.101.108.133 avatars8.githubusercontent.com
+    # GitHub End
+   ```
 
 ## Documents
 
