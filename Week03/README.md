@@ -39,7 +39,7 @@ happen-before
 ## Q&A
 
 1. [第五课问题收集](https://shimo.im/docs/8yxKjP8r8RjKghPd)
-2. [第六课问题收集]()
+2. [第六课问题收集](https://shimo.im/docs/HYHRdYR6HDCRdvpP)
 
 ## Documents
 
