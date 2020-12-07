@@ -54,7 +54,7 @@ happen-before
 
 ### TBD
 
-https://www.ardanlabs.com/blog/2018/11/goroutine-leaks-the-forgotten-sender.html
+[Goroutine Leaks - The Forgotten Sender](https://www.ardanlabs.com/blog/2018/11/goroutine-leaks-the-forgotten-sender.html)
 
 https://www.ardanlabs.com/blog/2019/04/concurrency-trap-2-incomplete-work.html
 
