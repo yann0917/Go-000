@@ -106,6 +106,11 @@ Do not store Contexts inside a struct type; instead, pass a Context explicitly t
 * [golang-notes](https://github.com/cch123/golang-notes) ☆☆☆☆☆
 * [Cache一致性和内存模型](https://wudaijun.com/2019/04/cpu-cache-and-memory-model/)
 
+## 作业
+
+> 1.基于 errgroup 实现一个 http server 的启动和关闭 ，以及 linux signal 信号的注册和处理，要保证能够 一个退出，全部注销退出。
+[作业代码](homework/main.go)
+
 ### TBD
 
 [Goroutine Leaks - The Forgotten Sender](https://www.ardanlabs.com/blog/2018/11/goroutine-leaks-the-forgotten-sender.html)
