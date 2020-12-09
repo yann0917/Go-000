@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 	"os/signal"
@@ -43,10 +42,11 @@ func main() {
 		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 		defer cancel()
 
-		if err := s.Shutdown(ctx); err != nil {
-			log.Fatal("server shutdown", err)
+		err := s.Shutdown(ctx)
+		if err != nil {
+			fmt.Printf("server shutdown: %v", err.Error())
 		}
-		return nil
+		return err
 	})
 
 	if err := group.Wait(); err != nil {
