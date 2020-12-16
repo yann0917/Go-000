@@ -2,7 +2,33 @@
 
 ## 工程项目结构
 
+### Standard Go Project Layout
+
+* [Standard Go Project Layout 中文](https://github.com/golang-standards/project-layout/blob/master/README_zh.md) ☆☆☆☆☆
+
+### Kit Project Layout
+
+### Service Application Project Layout
+
 ## API 设计
+
+### gRPC
+
+### API Project
+
+* [googleapis](https://github.com/googleapis/googleapis)
+* [data-plane-api](https://github.com/envoyproxy/data-plane-api)
+* [istio-api](https://github.com/istio/api)
+
+### API Compatibility
+
+### API Naming Conventions
+
+### API Primitive Fields
+
+### API Errors
+
+### API Design
 
 ## 配置管理
 
